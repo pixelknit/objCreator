@@ -5,7 +5,7 @@ def objCreator():
         path = n.parent().path()
         #print n.name()
 
-        choice = hou.ui.displayMessage('Select object to create:', buttons=('Box', 'Sphere', 'PolySphere', 'High Poly sphere'))
+        choice = hou.ui.displayMessage('Select object to create:', buttons=('Box', 'Sphere', 'PolySphere', 'High Poly sphere', 'Grid'))
         p = hou.ui.paneTabOfType(hou.paneTabType.NetworkEditor)
         position = p.selectPosition()
 
@@ -39,6 +39,17 @@ def objCreator():
             hpsphere.setPosition(position)
             hpsphere.setDisplayFlag(True)
             hpsphere.setRenderFlag(True)
+
+        if choice == 4:
+            
+            grid = hou.node(path).createNode('grid', 'Grid')
+            r = grid.parm('rows')
+            c = grid.parm('cols')
+            c.set(r)
+            grid.setPosition(position)
+            grid.setDisplayFlag(True)
+            grid.setRenderFlag(True)
+            grid.setSelected(True)
 
     except:
         hou.ui.displayMessage('Please select any node on the current context first!')
